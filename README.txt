@@ -30,3 +30,17 @@ Excel 2007 on Windows Vista
 GoogleCalendar.cls Shift_JIS
 Module1.bas Shift_JIS
 entry.xml UTF-8
+
+■ 参考にしたサイト
+
+Google Calendar APIの基礎
+http://www.rcdtokyo.com/ucb/contents/i000815.php
+
+Google Calendar Data API Developer's Guide: Protocolを日本語訳しました
+http://d.hatena.ne.jp/shingotada/20070516
+
+WinHTTP ライブラリで Web スクレイピング(1)～ GET 編～
+http://www.f3.dion.ne.jp/~element/msaccess/AcTipsWinHTTP1.html
+
+WinHttpRequest Object
+http://msdn.microsoft.com/en-us/library/aa384106(v=VS.85).aspx
