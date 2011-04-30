@@ -48,6 +48,9 @@ Private Sub Class_Initialize()
     Set http = New WinHttp.WinHttpRequest
 End Sub
 
+Private Sub Class_Terminate()
+    Set http = Nothing
+End Sub
 
 ' POST /accounts/ClientLogin HTTP/1.1
 ' Content-Type: application/x-www-form-urlencoded
@@ -69,7 +72,7 @@ Public Sub login(email As String, password As String)
         If pos = 0 Then
             ' todo
         Else
-            token = WorksheetFunction.Clean(Mid(http.ResponseText, pos + 5))
+            token = clean(Mid(http.ResponseText, pos + 5))
             authorization = "GoogleLogin auth=" & token
         End If
     Else
@@ -124,10 +127,18 @@ End Sub
 Private Function redirectURI(html As String) As String
     Dim reg As VBScript_RegExp_55.RegExp
     Dim matches As VBScript_RegExp_55.MatchCollection
-
+    
     Set reg = New VBScript_RegExp_55.RegExp
     reg.IgnoreCase = True
     reg.Pattern = "href=""(.+?)"""
     Set matches = reg.Execute(html)
     redirectURI = matches(0).SubMatches(0)
+End Function
+
+Private Function clean(text As String) As String
+    Dim reg As VBScript_RegExp_55.RegExp
+    
+    Set reg = New VBScript_RegExp_55.RegExp
+    reg.Pattern = "\s"
+    clean = reg.Replace(text, "")
 End Function
