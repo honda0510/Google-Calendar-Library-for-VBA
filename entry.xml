@@ -1,0 +1,17 @@
+<entry
+    xmlns="http://www.w3.org/2005/Atom"
+    xmlns:gd="http://schemas.google.com/g/2005">
+  <category
+    scheme="http://schemas.google.com/g/2005#kind"
+    term="http://schemas.google.com/g/2005#event">
+  </category>
+  <title type="text">VBAでGoogle カレンダーに予定を作成</title>
+  <content type="text">2011年4月30日（土）の21時頃に、VBAでGoogle カレンダーに予定を作成することに初めて成功しました。</content>
+  <gd:transparency value="http://schemas.google.com/g/2005#event.opaque"></gd:transparency>
+  <gd:eventStatus value="http://schemas.google.com/g/2005#event.confirmed"></gd:eventStatus>
+  <gd:where valueString="moug"></gd:where>
+  <gd:when
+    startTime="2011-04-30T21:00:00+09:00"
+    endTime="2011-04-30T22:00:00+09:00">
+  </gd:when>
+</entry>
