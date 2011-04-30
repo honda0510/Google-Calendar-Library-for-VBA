@@ -1,6 +1,7 @@
 Google Carendar Library for VBA
 
-まだまだ発展途上です
+今のところ、Google カレンダーに予定を追加するクラスしかありません。
+発展途上です。
 
 ■ デモ
 
