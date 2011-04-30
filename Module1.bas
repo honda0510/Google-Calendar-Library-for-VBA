@@ -7,15 +7,15 @@ Sub test()
     Dim password As String
     Dim xml As String
     
-    email = Range("A1")
-    password = Range("A2")
+    email = Range("A1").Value
+    password = Range("A2").Value
     xml = Range("A3").Value
     
     ' Google にログイン
     Set GoogleCalendar = New GoogleCalendar
     GoogleCalendar.login email, password
         
-    ' Google カレンダーにイベントを追加
+    ' Google カレンダーに予定を追加
     GoogleCalendar.add xml
     
     MsgBox "OK"
