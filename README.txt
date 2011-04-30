@@ -1,3 +1,5 @@
+Google Carendar Library for VBA
+
 ■デモ
 
 Excelファイルにモジュールをインポートしてください。
