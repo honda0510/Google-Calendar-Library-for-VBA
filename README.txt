@@ -18,4 +18,4 @@ Alt + F8 を押して、test を実行してください。
 
 GoogleCalendar.cls Shift_JIS
 Module1.bas Shift_JIS
-entry.xml
+entry.xml UTF-8
