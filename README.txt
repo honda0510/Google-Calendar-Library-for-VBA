@@ -1,5 +1,6 @@
 Google Carendar Library for VBA
-（まだまだ発展途上です）
+
+まだまだ発展途上です
 
 ■デモ
 
