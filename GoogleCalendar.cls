@@ -25,15 +25,18 @@ Private Const URI_GOOGLE_LOGIN As String = "https://www.google.com/accounts/Clie
 Private Const URI_GOOGLE_CALENDAR As String = "http://www.google.com/calendar/feeds/default/private/full"
 
 Private http As WinHttp.WinHttpRequest
+Private reg As VBScript_RegExp_55.RegExp
 Private token As String
 Private authorization As String
 
 Private Sub Class_Initialize()
     Set http = New WinHttp.WinHttpRequest
+    Set reg = New VBScript_RegExp_55.RegExp
 End Sub
 
 Private Sub Class_Terminate()
     Set http = Nothing
+    Set reg = Nothing
 End Sub
 
 ' POST /accounts/ClientLogin HTTP/1.1
@@ -46,21 +49,16 @@ Public Sub login(email As String, password As String)
     Dim pos As Long
     
     body = "Email=" & email & "&Passwd=" & password & "&service=cl&source=Microsoft-VisualBasic-6.5"
-    Set http = New WinHttp.WinHttpRequest
     http.Open "POST", URI_GOOGLE_LOGIN, False
     http.SetRequestHeader "Content-Type", "application/x-www-form-urlencoded"
-    http.Send CVar(body)
+    httpSend body
 
-    If http.Status = HTTP_STATUS_OK Then
-        pos = InStr(1, http.ResponseText, "Auth=")
-        If pos = 0 Then
-            ' todo
-        Else
-            token = trim2(Mid(http.ResponseText, pos + 5))
-            authorization = "GoogleLogin auth=" & token
-        End If
+    pos = InStr(1, http.ResponseText, "Auth=")
+    If pos = 0 Then
+        ' todo
     Else
-        Err.Raise http.Status, , http.StatusText
+        token = trim2(Mid(http.ResponseText, pos + 5))
+        authorization = "GoogleLogin auth=" & token
     End If
 End Sub
 
@@ -82,17 +80,15 @@ Public Sub add(xml As String)
     http.SetRequestHeader "Content-Type", "application/atom+xml"
     http.Send CVar(xml)
 
-    If http.Status = HTTP_STATUS_MOVED_TEMPORARILY Then
+    If http.Status = HTTP_STATUS_CREATED Then
+        ' OK
+    ElseIf http.Status = HTTP_STATUS_MOVED_TEMPORARILY Then
         uri = redirectURI(http.ResponseText)
         http.Open "POST", uri, False
         http.SetRequestHeader "Authorization", authorization
         http.SetRequestHeader "Content-Type", "application/atom+xml"
-        http.Send CVar(xml)
-    
-        If http.Status = HTTP_STATUS_CREATED Then
-        Else
-            Err.Raise http.Status, , http.StatusText
-        End If
+        httpSend xml, HTTP_STATUS_CREATED
+        ' OK
     Else
         Err.Raise http.Status, , http.StatusText
     End If
@@ -109,10 +105,9 @@ End Sub
 ' </HTML>
 
 Private Function redirectURI(html As String) As String
-    Dim reg As VBScript_RegExp_55.RegExp
     Dim matches As VBScript_RegExp_55.MatchCollection
     
-    Set reg = New VBScript_RegExp_55.RegExp
+    reg.Global = False
     reg.IgnoreCase = True
     reg.Pattern = "href=""(.+?)"""
     Set matches = reg.Execute(html)
@@ -120,10 +115,18 @@ Private Function redirectURI(html As String) As String
 End Function
 
 Private Function trim2(text As String) As String
-    Dim reg As VBScript_RegExp_55.RegExp
-    
-    Set reg = New VBScript_RegExp_55.RegExp
-    reg.Global = True
-    reg.Pattern = "^\s|\s$"
+    reg.Pattern = "^\s+|\s+$"
     trim2 = reg.Replace(text, "")
 End Function
+
+Private Sub httpSend(Optional data, Optional ok_code As Long = HTTP_STATUS_OK)
+    If IsMissing(data) Then
+        http.Send
+    Else
+        http.Send data
+    End If
+    
+    If http.Status <> ok_code Then
+        Err.Raise http.Status, , http.StatusText
+    End If
+End Sub
