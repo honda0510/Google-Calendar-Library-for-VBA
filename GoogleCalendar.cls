@@ -22,7 +22,7 @@ Private Const HTTP_STATUS_CREATED As Long = 201
 Private Const HTTP_STATUS_MOVED_TEMPORARILY As Long = 302
 
 Private Const URI_GOOGLE_LOGIN As String = "https://www.google.com/accounts/ClientLogin"
-Private Const URI_GOOGLE_CALENDAR As String = "http://www.google.com/calendar/feeds/default/private/full"
+Private Const URI_GOOGLE_CALENDAR As String = "https://www.google.com/calendar/feeds/default/private/full"
 
 Private http As WinHttp.WinHttpRequest
 Private reg As VBScript_RegExp_55.RegExp
